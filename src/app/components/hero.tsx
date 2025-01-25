@@ -3,13 +3,15 @@ import Image from "next/image";
 import React from "react";
 import Typewriter from "typewriter-effect";
 import Link from "next/link";
+
 function Hero() {
   return (
     <section className="text-gray-600 body-font bg-gray-100">
-      <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
-        <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-          <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
-            I am a {"  "}
+      <div className="container mx-auto flex px-5 py-16 flex-col-reverse md:flex-row items-center">
+        {/* Text Content */}
+        <div className="lg:flex-grow md:w-1/2 lg:pr-16 md:pr-12 flex flex-col md:items-start md:text-left items-center text-center">
+          <h1 className="title-font sm:text-4xl text-2xl font-semibold text-gray-900 mb-4">
+            I am a{" "}
             <br className="hidden lg:inline-block" />
             <Typewriter
               options={{
@@ -24,26 +26,27 @@ function Hero() {
               }}
             />
           </h1>
-          <div className="w-24 h-1 bg-blue-500"></div>
-          <p className="mb-8 leading-relaxed">
+          <div className="w-20 h-1 bg-blue-500 mb-6"></div>
+          <p className="mb-8 leading-relaxed text-sm sm:text-base">
             I am a passionate and skilled front-end developer with expertise in
             building responsive, user-friendly web applications. With experience
             in HTML, CSS, JavaScript, React, and Next.js, I bring a strong
             understanding of UI/UX principles and design aesthetics to every
-            project. My focus is on creating seamless and engaging user
-            experiences while ensuring functionality and performance.
+            project.
           </p>
           <div className="flex justify-center">
-            <Link href={"./contact"} className="mr-5">
-              <button className="inline-flex  w-48 h-12 text-center px-12 text-white border-0 pt-2 focus:outline-none bg-blue-500 font-semibold hover:bg-blue-600 rounded-lg text-2xl">
+            <Link href="./contact">
+              <button className="inline-flex w-40 sm:w-48 h-10 sm:h-12 items-center justify-center text-white bg-blue-500 hover:bg-blue-600 rounded-md text-lg sm:text-2xl font-semibold">
                 Contact
               </button>
             </Link>
           </div>
         </div>
-        <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+
+        {/* Image */}
+        <div className="lg:max-w-lg lg:w-full md:w-1/2 w-4/5 sm:w-3/4">
           <Image
-            className="object-cover object-center rounded mx-auto w-80"
+            className="object-cover object-center rounded-lg mx-auto"
             alt="Hero image of web developer"
             width={700}
             height={700}

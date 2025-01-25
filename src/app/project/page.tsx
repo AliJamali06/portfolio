@@ -8,7 +8,7 @@ function Project() {
       <section className="text-gray-600 body-font">
         <div className="container px-4 sm:px-6 lg:px-8 py-12 sm:py-16 mx-auto">
           <div className="flex flex-col text-center w-full mb-12">
-            <h1 className="text-2xl sm:text-3xl font-medium title-font mb-4 text-gray-900">
+            <h1 className="text-2xl sm:text-3xl font-medium title-font mb-4 text-white">
               My Projects
             </h1>
           </div>

@@ -1,94 +1,85 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { BsGithub, BsLinkedin, BsHouseFill, BsPersonFill, BsCodeSlash, BsTools, BsEnvelopeFill } from "react-icons/bs";
 
 function Navbar() {
-  const [isOpen, setIsOpen] = useState(false); // State for toggling the navbar visibility
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState("/");
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen); // Toggle the state
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "unset";
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    setActiveItem(window.location.pathname);
+  }, []);
+
+  const menuItems = [
+    { href: "/", text: "Home", icon: <BsHouseFill className="text-2xl" /> },
+    { href: "/about", text: "About", icon: <BsPersonFill className="text-2xl" /> },
+    { href: "/project", text: "Projects", icon: <BsCodeSlash className="text-2xl" /> },
+    { href: "/skills", text: "Skills", icon: <BsTools className="text-2xl" /> },
+    { href: "/contact", text: "Contact", icon: <BsEnvelopeFill className="text-2xl" /> },
+  ];
 
   return (
-    <div className="navbar bg-white z-50 sticky top-0 shadow-md">
-      <header className="container mx-auto flex flex-wrap p-2 flex-col md:flex-row items-center">
-        <p className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-          <span className="ml-3 text-xl font-bold">Ali Dost</span>
-        </p>
+    <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? "bg-gray-900/90 shadow-md" : "bg-transparent"}`}>
+      <div className="container mx-auto px-6 flex items-center justify-between py-4">
+        <Link href="/" className="text-2xl font-bold text-white">
+          Ali Dost
+        </Link>
 
-        {/* Mobile Hamburger Icon */}
-        <button
-          className="hamburger-icon md:hidden ml-auto text-gray-500 hover:text-blue-600 focus:outline-none"
-          onClick={toggleMenu}
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </button>
-
-        {/* Full-Screen Mobile Menu */}
-        <div
-          className={`${
-            isOpen ? "block" : "hidden"
-          } md:hidden fixed inset-0 bg-gray-800 bg-opacity-75 z-50 flex flex-col items-center justify-center`}
-        >
-          <button
-            className="text-white text-3xl absolute top-4 right-4"
-            onClick={toggleMenu}
-          >
-            X
-          </button>
-
-          <nav className="flex flex-col items-center space-y-4">
-            <Link href="/" className="text-white text-2xl" onClick={toggleMenu}>
-              Home
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center space-x-6">
+          {menuItems.map((item) => (
+            <Link key={item.href} href={item.href} onClick={() => setActiveItem(item.href)}
+              className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-all duration-300 ${activeItem === item.href ? "bg-blue-500/20 text-blue-400" : "text-gray-300 hover:text-white hover:bg-gray-800/50"}`}>
+              {item.icon}
+              <span>{item.text}</span>
             </Link>
-            <Link href="/about" className="text-white text-2xl" onClick={toggleMenu}>
-              About
-            </Link>
-            <Link href="/skills" className="text-white text-2xl" onClick={toggleMenu}>
-              Skills
-            </Link>
-            <Link href="/project" className="text-white text-2xl" onClick={toggleMenu}>
-              Projects
-            </Link>
-            <Link href="/contact" className="text-white text-2xl" onClick={toggleMenu}>
-              Contact
-            </Link>
-          </nav>
+          ))}
         </div>
 
-        {/* Regular Navbar Links (visible on desktop) */}
-        <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center md:block hidden">
-          <Link href="/" className="nav-link px-4">
-            Home
-          </Link>
-          <Link href="/about" className="nav-link px-4">
-            About
-          </Link>
-          <Link href="/skills" className="nav-link px-4">
-            Skills
-          </Link>
-          <Link href="/project" className="nav-link px-4">
-            Projects
-          </Link>
-          <Link href="/contact" className="nav-link px-4">
-            Contact
-          </Link>
-        </nav>
-      </header>
-    </div>
+        {/* Mobile Menu Button */}
+        <button className="md:hidden p-2 bg-blue-500/20 rounded-lg" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <div className="w-6 h-5 flex flex-col justify-between">
+            <span className={`block h-0.5 bg-white transition-all duration-300 ${isMobileMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block h-0.5 bg-white transition-all duration-300 ${isMobileMenuOpen ? "opacity-0" : ""}`} />
+            <span className={`block h-0.5 bg-white transition-all duration-300 ${isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+          </div>
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 20 }}
+            className="fixed top-0 right-0 w-3/4 max-w-sm h-full bg-gray-900 p-6 shadow-lg md:hidden">
+            <div className="flex flex-col space-y-4">
+              {menuItems.map((item) => (
+                <Link key={item.href} href={item.href} onClick={() => { setActiveItem(item.href); setIsMobileMenuOpen(false); }}
+                  className={`flex items-center gap-4 p-3 rounded-lg transition-all duration-300 ${activeItem === item.href ? "bg-blue-500/20 text-blue-400" : "text-gray-300 hover:text-white hover:bg-gray-800"}`}>
+                  {item.icon}
+                  <span>{item.text}</span>
+                </Link>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
   );
 }
 

@@ -1,127 +1,128 @@
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
+'use client';
 
-function Project() {
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { BsGithub } from 'react-icons/bs';
+
+const projects = [
+  {
+    title: "Simple Calculator",
+    description: "A TypeScript-based calculator with basic arithmetic operations and clean UI.",
+    image: "/image22.png",
+    tech: ["TypeScript", "Next.js", "Tailwind CSS"],
+    color: "from-blue-600 to-purple-600",
+    textColor: "text-blue-400",
+    link: "https://github.com/alijamali06/simple-calculator"
+  },
+  {
+    title: "CLI Number Guessing",
+    description: "Interactive command-line game built with TypeScript for number guessing fun.",
+    image: "/image100.png",
+    tech: ["TypeScript", "Node.js", "CLI"],
+    color: "from-purple-600 to-pink-600",
+    textColor: "text-purple-400",
+    link: "https://github.com/alijamali06/cli-number-guessing"
+  },
+  {
+    title: "Dynamic E-commerce",
+    description: "Full-featured e-commerce platform with product management and cart functionality.",
+    image: "/images.jpeg",
+    tech: ["TypeScript", "Next.js", "MongoDB"],
+    color: "from-green-600 to-blue-600",
+    textColor: "text-green-400",
+    link: "https://github.com/AliJamali06/sanity_project"
+  },
+  {
+    title: "Dynamic Blogs",
+    description: "Blog platform with dynamic content management and user interactions.",
+    image: "/blogs.jpeg",
+    tech: ["TypeScript", "Next.js", "Tailwind"],
+    color: "from-yellow-600 to-red-600",
+    textColor: "text-yellow-400",
+    link: "https://github.com/alijamali06/dynamic-blogs"
+  },
+  {
+    title: "Multipage Website",
+    description: "Custom CSS-based multipage website with responsive design.",
+    image: "/multipages.jpeg",
+    tech: ["TypeScript", "CSS", "Next.js"],
+    color: "from-red-600 to-pink-600",
+    textColor: "text-red-400",
+    link: "https://github.com/alijamali06/multipage-website-custom-css"
+  },
+  {
+    title: "Dynamic Resume",
+    description: "Interactive resume builder with customizable templates.",
+    image: "/image100.png",
+    tech: ["HTML", "CSS", "JavaScript"],
+    color: "from-indigo-600 to-purple-600",
+    textColor: "text-indigo-400",
+    link: "https://github.com/alijamali06/Dynamic-resume"
+  }
+];
+
+const ProjectPage = () => {
   return (
-    <div>
-      <section className="text-gray-600 body-font">
-        <div className="container px-4 sm:px-6 lg:px-8 py-12 sm:py-16 mx-auto">
-          <div className="flex flex-col text-center w-full mb-12">
-            <h1 className="text-2xl sm:text-3xl font-medium title-font mb-4 text-white">
-              My Projects
-            </h1>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {/* Project 1 */}
-            <div className="relative cursor-pointer group">
-              <Image
-                alt="Currency Converter"
-                className="rounded-lg"
-                width={600}
-                height={300}
-                src="/image2.png"
-              />
-              <div className="absolute inset-0 flex flex-col justify-center items-center bg-white bg-opacity-90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
-                <h2 className="text-sm font-medium text-indigo-500 mb-2">
-                  Currency Converter
-                </h2>
-                <h1 className="text-lg font-medium text-gray-900 mb-3">
-                  <b>Currency</b>
-                </h1>
-                <p className="text-gray-700 mb-2 text-center">
-                  This is my Currency Converter project.
-                </p>
-                <Link href="https://github.com/alijamali06">
-                  <p className="text-blue-500 hover:underline">
-                    View Project
-                  </p>
-                </Link>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-black text-white">
+      {/* Hero Section */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="container mx-auto px-4 pt-32 pb-16 text-center"
+      >
+        <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+          My Projects
+        </h1>
+        <p className="mt-6 text-xl text-gray-300 max-w-2xl mx-auto">
+          A collection of my work showcasing various technologies and solutions
+        </p>
+      </motion.div>
+
+      {/* Projects Grid */}
+      <section className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.map((project, index) => (
+            <motion.div 
+              key={index}
+              whileHover={{ scale: 1.03, translateY: -5 }}
+              transition={{ duration: 0.2 }}
+              className="bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700 hover:border-blue-500"
+            >
+              <div className={`group relative w-full h-48 overflow-hidden`}>
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
               </div>
-            </div>
-            {/* Project 2 */}
-            <div className="relative cursor-pointer group">
-              <Image
-                alt="Calculator"
-                className="rounded-lg"
-                width={600}
-                height={300}
-                src="/image22.png"
-              />
-              <div className="absolute inset-0 flex flex-col justify-center items-center bg-white bg-opacity-90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
-                <h2 className="text-sm font-medium text-indigo-500 mb-2">
-                  <b>Calculator</b>
-                </h2>
-                <h1 className="text-lg font-medium text-gray-900 mb-3">
-                  <b>Calculator</b>
-                </h1>
-                <p className="text-gray-700 mb-2 text-center">
-                  This is my Calculator project.
-                </p>
-                <Link href="https://github.com/alijamali06">
-                  <p className="text-blue-500 hover:underline">
-                    View Project
-                  </p>
-                </Link>
+              <div className="p-6">
+                <h3 className={`text-2xl font-bold mb-3 ${project.textColor}`}>{project.title}</h3>
+                <p className="text-gray-300 mb-4">{project.description}</p>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.tech.map((tech, techIndex) => (
+                    <span key={techIndex} className={`px-3 py-1 bg-${project.color.split('-')[1]}/20 border border-${project.color.split('-')[1]}/50 rounded-full text-sm ${project.textColor}`}>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <a 
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex items-center gap-2 bg-gradient-to-r ${project.color} text-white px-6 py-3 rounded-lg hover:opacity-90 transition-opacity`}
+                >
+                  View Project
+                  <BsGithub className="w-5 h-5" />
+                </a>
               </div>
-            </div>
-            {/* Project 3 */}
-            <div className="relative cursor-pointer group">
-              <Image
-                alt="Static Resume"
-                className="rounded-lg"
-                width={600}
-                height={300}
-                src="/image100.png"
-              />
-              <div className="absolute inset-0 flex flex-col justify-center items-center bg-white bg-opacity-90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
-                <h2 className="text-sm font-medium text-indigo-500 mb-2">
-                  <b>Static Resume</b>
-                </h2>
-                <h1 className="text-lg font-medium text-gray-900 mb-3">
-                  <b>Static Resume</b>
-                </h1>
-                <p className="text-gray-700 mb-2 text-center">
-                  This is my Static Resume project.
-                </p>
-                <Link href="https://github.com/AliJamali06/static-Resume">
-                  <p className="text-blue-500 hover:underline">
-                    View Project
-                  </p>
-                </Link>
-              </div>
-            </div>
-            {/* Project 4 */}
-            <div className="relative cursor-pointer group">
-              <Image
-                alt="Dynamic Resume"
-                className="rounded-lg"
-                width={600}
-                height={300}
-                src="/imageman.png"
-              />
-              <div className="absolute inset-0 flex flex-col justify-center items-center bg-white bg-opacity-90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
-                <h2 className="text-sm font-medium text-indigo-500 mb-2">
-                  <b>Dynamic Resume</b>
-                </h2>
-                <h1 className="text-lg font-medium text-gray-900 mb-3">
-                  <b>Dynamic Resume</b>
-                </h1>
-                <p className="text-gray-700 mb-2 text-center">
-                  This is my Dynamic Resume project.
-                </p>
-                <Link href="https://github.com/AliJamali06/Dynamic-resume">
-                  <p className="text-blue-500 hover:underline">
-                    View Project
-                  </p>
-                </Link>
-              </div>
-            </div>
-          </div>
+            </motion.div>
+          ))}
         </div>
       </section>
     </div>
   );
-}
+};
 
-export default Project;
+export default ProjectPage;
